@@ -1,2 +1,2 @@
 # PBL
-My DS and c++ programming practice and college programs
+SmartStock:ARetailer-FocusedSystemforDemand-AwareInventoryandFEFOExpiryControl
