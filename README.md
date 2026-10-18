@@ -1,2 +1,0 @@
-# PBL
-SmartStock:ARetailer-FocusedSystemforDemand-AwareInventoryandFEFOExpiryControl
