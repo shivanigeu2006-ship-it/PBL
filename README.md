@@ -1,4 +1,4 @@
-# Palak Priya (2510012474) - Team Lead
+# Palak Priya (2510012474)
 SmartStock: A Retailer-Focused System for Demand-Aware Inventory and FEFO Expiry Control
 
 ## My modules
