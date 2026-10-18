@@ -1,4 +1,4 @@
-# Palak Priya (2510012474)
+# Palak Priya (2510012474) - Team Lead
 SmartStock: A Retailer-Focused System for Demand-Aware Inventory and FEFO Expiry Control
 
 ## My modules
@@ -20,4 +20,3 @@ Encapsulation (private data, public methods), constructors, `unordered_map`, vec
 
 ## Note
 These files are part of the full SmartStock project and depend on the other members' files, so they build together with it from the main project folder.
-
