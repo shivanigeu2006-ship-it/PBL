@@ -1,4 +1,4 @@
-// Supplier.h - purchasing details: lead time (days) and default safety stock (units).
+
 #pragma once
 #include <string>
 #include "Utils.h"
