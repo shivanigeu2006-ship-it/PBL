@@ -10,7 +10,7 @@
 
 using json = nlohmann::json;
 
-// Error that carries an HTTP status so the API layer can answer properly.
+
 struct ApiError : public std::runtime_error {
     int status;
     ApiError(int s, const std::string& m) : std::runtime_error(m), status(s) {}
