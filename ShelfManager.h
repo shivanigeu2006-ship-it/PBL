@@ -1,6 +1,4 @@
-// ShelfManager.h - owns all shelves. Assigns products to shelves, enforces capacity,
-// reports free space and suggests rearrangements when a shelf is nearly full.
-// Space model: one unit of stock occupies one unit of shelf capacity.
+
 #pragma once
 #include <map>
 #include <vector>
@@ -79,7 +77,7 @@ public:
         return true;
     }
 
-    // Best shelf for a product: shelf zone matching its category first, then most free space.
+   
     std::string autoAssign(const Product& p, int needed) const {
         std::string best;
         int bestFree = -1, bestRank = -1;
@@ -94,7 +92,6 @@ public:
         return best;
     }
 
-    // Suggestions: place unassigned products and relieve shelves that are >= 85% full.
     std::vector<ShelfSuggestion> suggestions(const Inventory& inv) const {
         std::vector<ShelfSuggestion> out;
         std::map<std::string, int> freeMap;
