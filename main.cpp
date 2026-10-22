@@ -1,6 +1,3 @@
-// main.cpp - SmartStock web server.
-// Serves the browser UI (./frontend) and a JSON REST API backed by the SmartShop class.
-//   Usage: smartstock [--port 8080] [--data data] [--web frontend]
 #include <iostream>
 #include <functional>
 #include <filesystem>
@@ -60,7 +57,7 @@ std::string findWebDir(const std::string& hint) {
     return hint;
 }
 
-}  // namespace
+}  
 
 int main(int argc, char** argv) {
     int port = 8080;
@@ -77,7 +74,6 @@ int main(int argc, char** argv) {
     SmartShop shop(dataDir);
     httplib::Server svr;
 
-    // Wraps a handler: JSON in/out, ApiError -> proper HTTP status, anything else -> 500.
     using Handler = std::function<json(const httplib::Request&, httplib::Response&)>;
     auto wrap = [](Handler fn) {
         return [fn](const httplib::Request& req, httplib::Response& res) {
@@ -98,12 +94,11 @@ int main(int argc, char** argv) {
     };
     auto created = [](httplib::Response& res) { res.status = 201; };
 
-    // ---- dashboard, alerts
+    
     svr.Get("/api/health", wrap([&](auto&, auto&) { return json({{"status", "ok"}}); }));
     svr.Get("/api/dashboard", wrap([&](auto&, auto&) { return shop.dashboard(); }));
     svr.Get("/api/alerts", wrap([&](auto&, auto&) { return json(shop.alerts()); }));
 
-    // ---- products
     svr.Get("/api/products", wrap([&](auto& req, auto&) { return shop.listProducts(req.get_param_value("q")); }));
     svr.Post("/api/products", wrap([&](auto& req, auto& res) { json r = shop.addProduct(parseBody(req)); created(res); return r; }));
     svr.Get("/api/products/:sku", wrap([&](auto& req, auto&) { return shop.getProduct(req.path_params.at("sku")); }));
@@ -111,17 +106,17 @@ int main(int argc, char** argv) {
     svr.Delete("/api/products/:sku", wrap([&](auto& req, auto&) { shop.deleteProduct(req.path_params.at("sku")); return json({{"deleted", true}}); }));
     svr.Post("/api/products/:sku/batches", wrap([&](auto& req, auto& res) { json r = shop.addBatch(req.path_params.at("sku"), parseBody(req)); created(res); return r; }));
 
-    // ---- sales
+    
     svr.Post("/api/sales", wrap([&](auto& req, auto& res) { json r = shop.recordSale(parseBody(req)); created(res); return r; }));
     svr.Get("/api/sales", wrap([&](auto& req, auto&) { return shop.listSales(req.get_param_value("sku"), queryInt(req, "limit", 100)); }));
 
-    // ---- suppliers
+    
     svr.Get("/api/suppliers", wrap([&](auto&, auto&) { return shop.listSuppliers(); }));
     svr.Post("/api/suppliers", wrap([&](auto& req, auto& res) { json r = shop.addSupplier(parseBody(req)); created(res); return r; }));
     svr.Put("/api/suppliers/:id", wrap([&](auto& req, auto&) { return shop.updateSupplier(req.path_params.at("id"), parseBody(req)); }));
     svr.Delete("/api/suppliers/:id", wrap([&](auto& req, auto&) { shop.deleteSupplier(req.path_params.at("id")); return json({{"deleted", true}}); }));
 
-    // ---- shelves
+    
     svr.Get("/api/shelves", wrap([&](auto&, auto&) { return shop.shelvesView(); }));
     svr.Post("/api/shelves", wrap([&](auto& req, auto& res) { json r = shop.addShelf(parseBody(req)); created(res); return r; }));
     svr.Post("/api/shelves/assign", wrap([&](auto& req, auto&) { return shop.assignShelf(parseBody(req)); }));
@@ -129,7 +124,7 @@ int main(int argc, char** argv) {
     svr.Put("/api/shelves/:id", wrap([&](auto& req, auto&) { return shop.updateShelf(req.path_params.at("id"), parseBody(req)); }));
     svr.Delete("/api/shelves/:id", wrap([&](auto& req, auto&) { shop.deleteShelf(req.path_params.at("id")); return json({{"deleted", true}}); }));
 
-    // ---- analysis
+    
     svr.Get("/api/demand", wrap([&](auto& req, auto&) { return shop.demandView(queryInt(req, "days", 30)); }));
     svr.Get("/api/expiry", wrap([&](auto& req, auto&) { return shop.expiryView(queryInt(req, "days", 7)); }));
     svr.Post("/api/expiry/discard", wrap([&](auto& req, auto&) { return shop.discardExpired(parseBody(req).value("sku", "")); }));
@@ -137,14 +132,14 @@ int main(int argc, char** argv) {
     svr.Get("/api/profit", wrap([&](auto&, auto&) { return shop.profitView(); }));
     svr.Get("/api/wastage", wrap([&](auto&, auto&) { return shop.wastageView(); }));
 
-    // ---- admin
+
     svr.Post("/api/seed", wrap([&](auto& req, auto&) {
         if (!parseBody(req).value("confirm", false)) throw ApiError(400, "Send {\"confirm\": true} to replace all data with the demo data");
         shop.seedDemo();
         return json({{"seeded", true}});
     }));
 
-    // ---- CSV export (products | sales | profit | reorder)
+    
     svr.Get("/api/export/:what", [&](const httplib::Request& req, httplib::Response& res) {
         try {
             std::string w = req.path_params.at("what");
@@ -162,7 +157,7 @@ int main(int argc, char** argv) {
         }
     });
 
-    // JSON errors for unknown API routes; static UI for everything else.
+    
     svr.set_error_handler([](const httplib::Request& req, httplib::Response& res) {
         if (req.path.rfind("/api/", 0) == 0 && res.body.empty()) {  // keep messages set by handlers
             std::string msg = res.status == 404 ? "No such API endpoint" : "Request failed";
