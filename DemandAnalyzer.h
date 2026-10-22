@@ -1,7 +1,4 @@
-// DemandAnalyzer.h - average daily demand per product and High/Medium/Low classification.
-// Avg Daily Demand = Total Units Sold / Number of Days.
-// Products are SORTED by demand; the top third is High, middle third Medium, the rest Low
-// (products that sold nothing are always Low).
+
 #pragma once
 #include <vector>
 #include <algorithm>
@@ -21,8 +18,6 @@ class DemandAnalyzer {
 public:
     static const int DEFAULT_DAYS = 30;
 
-    // `days` is the look-back window. When the shop has fewer days of history than the window,
-    // the history length is used instead so new shops are not under-counted. Never divides by zero.
     std::vector<DemandInfo> analyze(const Inventory& inv, const SalesRecord& sales, long today, int days) const {
         if (days <= 0) days = DEFAULT_DAYS;
         long from = today - days + 1;
@@ -52,7 +47,6 @@ public:
         return out;
     }
 
-    // Unrounded average used by the reorder formula (so rounding never skews the reorder point).
     double rawAvg(const std::string& sku, const SalesRecord& sales, long today, int days) const {
         if (days <= 0) days = DEFAULT_DAYS;
         long first = sales.firstDay(today);
