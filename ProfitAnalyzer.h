@@ -1,8 +1,4 @@
-// ProfitAnalyzer.h - profit per unit, total profit and profit margin.
-//   Profit per Unit = Selling Price - Cost Price
-//   Total Profit    = Profit per Unit x Units Sold   (summed per sale so past prices stay correct)
-//   Profit Margin   = (Selling Price - Cost Price) / Selling Price x 100
-// Value of written-off (expired) stock is tracked as wastage and subtracted for net profit.
+
 #pragma once
 #include <vector>
 #include <algorithm>
