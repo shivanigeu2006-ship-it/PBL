@@ -1,5 +1,4 @@
-// SalesRecord.h - stores every sale and updates stock after each one (FEFO).
-// Price and cost are copied into the sale so history stays correct if prices change later.
+
 #pragma once
 #include <vector>
 #include <string>
@@ -40,7 +39,7 @@ public:
         Sale sale;
     };
 
-    // Validates, takes stock FEFO, stores the sale. Sales larger than sellable stock are rejected.
+    
     Result record(Inventory& inv, const std::string& sku, int units, long day) {
         Result r;
         Product* p = inv.find(sku);
@@ -67,13 +66,13 @@ public:
     void load(std::vector<Sale> v, int counter) { sales_ = std::move(v); counter_ = counter; }
     int counter() const { return counter_; }
 
-    // Units sold for a SKU between two days (inclusive).
+   
     int unitsSold(const std::string& sku, long from, long to) const {
         int n = 0;
         for (auto& s : sales_) if (s.sku == sku && s.day >= from && s.day <= to) n += s.units;
         return n;
     }
-    // First day any sale was recorded (or `fallback` when there are none).
+  
     long firstDay(long fallback) const {
         long d = fallback;
         for (auto& s : sales_) d = std::min(d, s.day);
