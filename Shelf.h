@@ -1,13 +1,11 @@
-// Shelf.h - a physical shelf with a capacity (in units) and the space currently used.
-#pragma once
+
 #include <string>
 #include "Utils.h"
 
 class Shelf {
     std::string id_, name_, zone_;
     int capacity_ = 0;
-    int used_ = 0;  // recomputed by ShelfManager from the stock assigned to this shelf
-
+    int used_ = 0;  
 public:
     Shelf() = default;
     Shelf(std::string id, std::string name, std::string zone, int capacity)
