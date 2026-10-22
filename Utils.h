@@ -1,4 +1,4 @@
-// Utils.h - date helpers (ISO yyyy-mm-dd <-> day numbers), rounding, JSON alias.
+
 #pragma once
 #include <string>
 #include <ctime>
@@ -18,7 +18,6 @@ struct ApiError : public std::runtime_error {
 
 namespace util {
 
-// "No expiry" (non-perishable goods) is stored as a very large day number.
 const long NO_EXPIRY = 99999999L;
 
 inline long daysFromCivil(int y, int m, int d) {
@@ -52,7 +51,7 @@ inline std::string formatDate(long day) {
     return buf;
 }
 
-// Strict yyyy-mm-dd parser. Empty string means "no expiry".
+
 inline bool parseDate(const std::string& s, long& out) {
     if (s.empty()) { out = NO_EXPIRY; return true; }
     int y, m, d;
