@@ -1,5 +1,4 @@
-// Product.h - a product identified by SKU. Stock is held in batches, each with
-// its own quantity and expiry date, so FEFO always sells the earliest expiry first.
+
 #pragma once
 #include <string>
 #include <vector>
@@ -38,7 +37,7 @@ public:
         : sku_(std::move(sku)), name_(std::move(name)), category_(std::move(category)),
           cost_(cost), price_(price), target_(target) {}
 
-    // ---- getters ----
+   
     const std::string& sku() const { return sku_; }
     const std::string& name() const { return name_; }
     const std::string& category() const { return category_; }
@@ -50,7 +49,6 @@ public:
     int safety() const { return safety_; }
     const std::vector<Batch>& batches() const { return batches_; }
 
-    // ---- setters ----
     void setName(const std::string& v) { name_ = v; }
     void setCategory(const std::string& v) { category_ = v; }
     void setCost(double v) { cost_ = v; }
@@ -60,7 +58,7 @@ public:
     void setShelf(const std::string& v) { shelfId_ = v; }
     void setSupplier(const std::string& v) { supplierId_ = v; }
 
-    // ---- stock ----
+    
     Batch& addBatch(int qty, long expiry, long received) {
         char buf[16];
         std::snprintf(buf, sizeof buf, "-B%03d", ++counter_);
@@ -71,8 +69,7 @@ public:
     int expiredStock(long t) const { int s = 0; for (auto& b : batches_) if (b.expiry < t) s += b.qty; return s; }
     int sellableStock(long t) const { return totalStock() - expiredStock(t); }
 
-    // FEFO: take units from non-expired batches, earliest expiry first.
-    // Returns the units actually taken. Empty batches are removed.
+    
     int sell(int units, long t) {
         std::stable_sort(batches_.begin(), batches_.end(),
                          [](const Batch& a, const Batch& b) { return a.expiry < b.expiry; });
@@ -98,11 +95,11 @@ public:
         return gone;
     }
 
-    // ---- profit helpers ----
+   
     double profitPerUnit() const { return price_ - cost_; }
     double marginPct() const { return price_ > 0 ? (price_ - cost_) / price_ * 100.0 : 0.0; }
 
-    // ---- persistence ----
+    
     json toJson() const {
         return {{"sku", sku_}, {"name", name_}, {"category", category_}, {"cost", cost_}, {"price", price_},
                 {"target", target_}, {"safety", safety_}, {"shelfId", shelfId_}, {"supplierId", supplierId_},
