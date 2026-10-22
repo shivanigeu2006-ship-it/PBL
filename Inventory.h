@@ -1,4 +1,4 @@
-// Inventory.h - product records keyed by SKU (unordered_map => average O(1) lookup).
+
 #pragma once
 #include <unordered_map>
 #include <vector>
@@ -12,7 +12,7 @@ public:
     bool exists(const std::string& sku) const { return items_.count(sku) > 0; }
 
     bool add(const Product& p) {
-        return items_.emplace(p.sku(), p).second;  // false if SKU already used
+        return items_.emplace(p.sku(), p).second;  
     }
     Product* find(const std::string& sku) {
         auto it = items_.find(sku);
