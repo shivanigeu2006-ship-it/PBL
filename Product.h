@@ -61,7 +61,7 @@ inline int parseDate(const std::string& text) {
     int day = value % 100;
     int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     bool leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    if (year < 1900 || month < 1 || month > 12 || day < 1) {
+    if (year < 2000 || month < 1 || month > 12 || day < 1) {
         return 0;
     }
     int maxDay = daysInMonth[month - 1] + ((month == 2 && leap) ? 1 : 0);
