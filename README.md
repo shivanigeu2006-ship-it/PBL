@@ -1,4 +1,4 @@
-# SmartStock
+Supriya Anand(2510011084)
 
 **A Retailer-Focused System for Demand-Aware Inventory and FEFO Expiry Control**
 Team DSCPP-III-2026-T118 (C++17, OOP + STL data structures + file handling, with a web UI)
