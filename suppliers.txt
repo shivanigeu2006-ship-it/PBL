@@ -1,9 +1,0 @@
-8
-MILK101 DairyFresh_Co 2 15
-YOGU202 GreekDelight_Ltd 3 10
-BRED303 GoldenBakery 2 12
-EGGS404 SunnyFarms 3 15
-APPL505 OrchardHarvest 4 20
-CHEZ606 ValleyCheese 5 10
-ICRM707 FrostyFoods_Ltd 4 10
-PEAS808 FrostyFoods_Ltd 3 10
