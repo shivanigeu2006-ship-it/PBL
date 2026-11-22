@@ -8,6 +8,10 @@ inline bool isLeap(int y) {
     return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
 }
 
+inline bool isLeap(int y) {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
 inline int dateToDays(int yyyymmdd) {
     int year  = yyyymmdd / 10000;
     int month = (yyyymmdd % 10000) / 100;
@@ -16,7 +20,7 @@ inline int dateToDays(int yyyymmdd) {
     int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
     int total = 0;
 
-    for (int y = 1900; y < year; y++)          // full years
+    for (int y = 2000; y < year; y++)          // full years since 2000
         total += isLeap(y) ? 366 : 365;
 
     for (int m = 1; m < month; m++) {          // full months this year
@@ -24,9 +28,8 @@ inline int dateToDays(int yyyymmdd) {
         if (m == 2 && isLeap(year)) total++;   // leap day
     }
 
-    return total + day;                        // days in current month
+    return total + day;
 }
-
 inline int daysDifference(int fromDate, int toDate) {
     return dateToDays(toDate) - dateToDays(fromDate);
 }
