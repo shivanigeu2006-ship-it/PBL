@@ -5,7 +5,7 @@
 
 static int passed = 0, failed = 0;
 #define CHECK(cond)                                                                   \
-    do {                                                                              \
+    do {                                                                        \
         if (cond) { ++passed; }                                                       \
         else { ++failed; std::cout << "  FAIL line " << __LINE__ << ": " #cond "\n"; } \
     } while (0)
