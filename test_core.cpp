@@ -5,12 +5,12 @@
 
 static int passed = 0, failed = 0;
 #define CHECK(cond)                                                                   \
-    do {                                                                        \
+    do {                                                                       \
         if (cond) { ++passed; }                                                       \
         else { ++failed; std::cout << "  FAIL line " << __LINE__ << ": " #cond "\n"; } \
     } while (0)
 
-int main() {
+int main() {{
     const long T = util::daysFromCivil(2026, 6, 15);  // fixed "today" for repeatable tests
 
     std::cout << "Dates\n";
