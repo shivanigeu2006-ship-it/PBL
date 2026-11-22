@@ -4,15 +4,27 @@
 #include <string>
 #include <vector>
 
+inline bool isLeap(int y) {
+    return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+}
+
 inline int dateToDays(int yyyymmdd) {
-    int year = yyyymmdd / 10000;
+    int year  = yyyymmdd / 10000;
     int month = (yyyymmdd % 10000) / 100;
-    int day = yyyymmdd % 100;
-    if (month <= 2) {
-        year = year - 1;
-        month = month + 12;
+    int day   = yyyymmdd % 100;
+
+    int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int total = 0;
+
+    for (int y = 1900; y < year; y++)          // full years
+        total += isLeap(y) ? 366 : 365;
+
+    for (int m = 1; m < month; m++) {          // full months this year
+        total += daysInMonth[m - 1];
+        if (m == 2 && isLeap(year)) total++;   // leap day
     }
-    return 365 * year + year / 4 - year / 100 + year / 400 + (153 * (month + 1)) / 5 + day;
+
+    return total + day;                        // days in current month
 }
 
 inline int daysDifference(int fromDate, int toDate) {
