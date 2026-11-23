@@ -63,16 +63,18 @@ const Product* Inventory::findProduct(const std::string& sku) const {
     return nullptr;
 }
 
-bool Inventory::updateStock(const std::string& sku, int qtyDelta) {
+bool Inventory::updateStock(const std::string& sku, int qtyDelta, int expiryDate) {
     Product* p = findProduct(sku);
     if (p == nullptr) {
         return false;
     }
     if (qtyDelta < 0) {
-        return p->reduceStock(-qtyDelta);
+        return p->reduceStock(-qtyDelta);      // a sale needs no expiry date
     } else if (qtyDelta > 0) {
-        
-        return p->addBatch(qtyDelta, 20271231);
+        if (expiryDate == 0) {
+            return false;                       // adding stock requires a real expiry
+        }
+        return p->addBatch(qtyDelta, expiryDate);
     }
     return true;
 }
