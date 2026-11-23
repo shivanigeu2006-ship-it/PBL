@@ -16,7 +16,7 @@ public:
     bool addProduct(const Product& product);
     Product* findProduct(const std::string& sku);
     const Product* findProduct(const std::string& sku) const;
-    bool updateStock(const std::string& sku, int qtyDelta);
+    bool updateStock(const std::string& sku, int qtyDelta, int expiryDate = 0);
     void displayAll() const;
     std::vector<std::string> checkLowStock(int threshold) const;
     std::vector<std::string> checkOverstock(int threshold) const;
